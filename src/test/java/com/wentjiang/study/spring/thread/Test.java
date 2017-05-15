@@ -3,12 +3,8 @@ package com.wentjiang.study.spring.thread;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by wentj on 2017/5/14.
@@ -24,7 +20,7 @@ public class Test {
     }
 
     public List<Student> test() {
-        List<Student> students = new ArrayList<Student>();
+        List<Student> students = new CopyOnWriteArrayList<>();
         ExecutorService pool = Executors.newFixedThreadPool(200);
         CountDownLatch latch = new CountDownLatch(100);
         for (int i = 0; i < 100; i++) {
