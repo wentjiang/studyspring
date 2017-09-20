@@ -1,5 +1,6 @@
 package com.wentjiang.study.spring.controller;
 
+import com.wentjiang.study.spring.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +22,7 @@ public class LocalController{
     public String local(){
 
         String message = null;
-//        message = applicationContext.get
+        message = SpringUtil.getI18nMessage("message_local");
         log.info("message:" + message);
 
         return "local";
