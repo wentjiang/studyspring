@@ -21,7 +21,7 @@
             <pattern>%-26(%d{HH:mm:ss SSS,Asia/Chongqing} [%thread]) %-5level %logger{32} - %msg%n</pattern>
         </encoder>
 	</appender>
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="All_LOG"/>
     </root>

@@ -21,8 +21,8 @@ public class Test {
 
     public List<Student> test() {
         List<Student> students = new CopyOnWriteArrayList<>();
-        ExecutorService pool = Executors.newFixedThreadPool(200);
-        CountDownLatch latch = new CountDownLatch(100);
+        ExecutorService pool = Executors.newFixedThreadPool(5);
+        CountDownLatch latch = new CountDownLatch(5);
         for (int i = 0; i < 100; i++) {
             pool.execute(new DrawStudentsData(students, i, latch));
         }
@@ -47,7 +47,8 @@ public class Test {
 
         @Override
         public void run() {
-            students.add(getStudent(id));latch.countDown();
+            students.add(getStudent(id));
+            latch.countDown();
         }
 
         private Student getStudent(Integer id) {

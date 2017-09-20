@@ -5,14 +5,13 @@ import com.wentjiang.study.spring.bean.ResponseType;
 import com.wentjiang.study.spring.exception.SystemException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by jiangwentao on 2017/5/10 16:41.
  */
-@ControllerAdvice
+//@ControllerAdvice
 @Slf4j
 public class SimpleExceptionHandler {
     @ExceptionHandler(Exception.class)

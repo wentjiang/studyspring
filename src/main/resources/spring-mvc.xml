@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--&lt;!&ndash; 启用spring mvc 注解 &ndash;&gt;-->
+    <!--<context:annotation-config />-->
+
+    <!-- Contoller包注解扫描 -->
+    <context:component-scan base-package="com.wentjiang.study.spring.controller" />
+
+    <mvc:resources mapping="/static/**" location="/static/"/>
+
+    <mvc:view-controller path="/404" view-name="common/404"/>
+    <mvc:view-controller path="/500" view-name="common/500"/>
+
+    <mvc:annotation-driven ignore-default-model-on-redirect="true">
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <!-- i18n基于请求参数改变locale的国际化拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean id="localeChangeInterceptor"
+                  class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <property name="basenamePrefix" value="theme."/>
+    </bean>
+
+    <bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
+        <property name="defaultThemeName" value="theme"/>
+    </bean>
+
+    <!-- i18n国际化支持 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:messages/message"/>
+        <!--<property name="cacheSeconds" value="${spring.i18n.messageSource.cacheSeconds}" />-->
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="language"/>
+    </bean>
+</beans>
