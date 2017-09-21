@@ -2,8 +2,6 @@ package com.wentjiang.study.spring.controller;
 
 import com.wentjiang.study.spring.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,18 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequestMapping("local")
-public class LocalController{
-
-    @Autowired
-    private ApplicationContext applicationContext;
+public class LocalController {
 
     @RequestMapping("")
-    public String local(){
+    public String local() {
+        String message1 = SpringUtil.getI18nMessage("message.args",new Object[]{"1","2"});
+        String message2 = SpringUtil.getI18nMessage("message.local");
 
-        String message = null;
-        message = SpringUtil.getI18nMessage("message_local");
-        log.info("message:" + message);
-
+        log.info("message1:" + message1);
+        log.info("message2:" + message2);
         return "local";
     }
 }

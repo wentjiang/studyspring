@@ -6,6 +6,6 @@
     <title>Spring local test</title>
 </head>
 <body>
-    <span><Spring:message code="message_local"/></span>
+    <span><Spring:message code="message.local"/></span>
 </body>
 </html>

@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.ServletContext;
@@ -36,17 +37,14 @@ public class SpringUtil {
         return RequestContextUtils.getLocale(getHttpServletRequest());
     }
 
-    public static String getI18nMessage(String code, Object[] args, Locale locale) {
-        ApplicationContext applicationContext = getApplicationContext();
-        return applicationContext.getMessage(code, args, locale);
-    }
-
-    public static String getI18nMessage(String code, Locale locale) {
-        return getI18nMessage(code, null, locale);
-    }
-
     public static String getI18nMessage(String code) {
-        return getI18nMessage(code, getRequestLocale());
+        RequestContext requestContext = new RequestContext(getHttpServletRequest());
+        return getI18nMessage(code,null);
+    }
+
+    public static String getI18nMessage(String code, Object[] args) {
+        RequestContext requestContext = new RequestContext(getHttpServletRequest());
+        return requestContext.getMessage(code, args);
     }
 
 }
